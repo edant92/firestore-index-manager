@@ -5,7 +5,8 @@ import {AUTHENTICATION, ROUTER_PATH} from "./Constants";
 import {GoogleLogin, GoogleLogout} from "react-google-login";
 import {setAccessToken} from "./redux/actions";
 import {connect} from "react-redux";
-import logo from './img/firebase-logo-built_white.svg'
+import builtWithFirebaseLogo from './img/firebase-logo-built_white.svg'
+import logo from './img/logo-with-text.svg'
 
 const mapStateToProps = state => {
   return {
@@ -78,7 +79,7 @@ class NavBar extends Component {
 
       <Menu id='sidebar-menu' vertical fixed='top' borderless>
         <Menu.Item header>
-          Firestore Index Manager
+          <Image src={logo} size='small' centered/>
         </Menu.Item>
 
         <Link
@@ -122,7 +123,7 @@ class NavBar extends Component {
         }
 
         <Menu.Item id="sidebar-menu-bottom">
-            <Image src={logo} size='small'/>
+            <Image src={builtWithFirebaseLogo} size='small' centered/>
         </Menu.Item>
       </Menu>
     );
