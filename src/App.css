@@ -9,6 +9,12 @@
   border-radius: 0;
 }
 
+#sidebar-menu-bottom {
+  position: fixed;
+  bottom: 0;
+  padding: 1em;
+}
+
 #content-main {
   margin-left: 250px;
   margin-top: 0;

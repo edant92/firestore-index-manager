@@ -1,10 +1,11 @@
 import React, {Component} from 'react'
 import {Link, withRouter} from 'react-router-dom';
-import {Button, Feed, Menu} from "semantic-ui-react";
+import {Button, Feed, Image, Menu, Segment} from "semantic-ui-react";
 import {AUTHENTICATION, ROUTER_PATH} from "./Constants";
 import {GoogleLogin, GoogleLogout} from "react-google-login";
 import {setAccessToken} from "./redux/actions";
 import {connect} from "react-redux";
+import logo from './img/firebase-logo-built_white.svg'
 
 const mapStateToProps = state => {
   return {
@@ -119,12 +120,16 @@ class NavBar extends Component {
           </Feed>
         </Menu.Item>
         }
+
+        <Menu.Item id="sidebar-menu-bottom">
+            <Image src={logo} size='small'/>
+        </Menu.Item>
       </Menu>
     );
   }
 
 }
 
-const HeaderDesktop = connect(mapStateToProps, mapDispatchToProps)(withRouter(NavBar));
+const SidebarMenu = connect(mapStateToProps, mapDispatchToProps)(withRouter(NavBar));
 
-export default HeaderDesktop
+export default SidebarMenu

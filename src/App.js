@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
 import {Segment} from "semantic-ui-react";
-import HeadrDesktop from "./HeaderDesktop";
+import SidebarMenu from "./SidebarMenu";
 import Main from "./Main";
 
 class App extends Component {
   render() {
     return (
       <div>
-        <HeadrDesktop/>
+        <SidebarMenu/>
         <Segment id='content-main' basic>
           <Main />
         </Segment>
