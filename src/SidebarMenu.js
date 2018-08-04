@@ -93,6 +93,12 @@ class NavBar extends Component {
                                               onClick={this.handleItemClick} link>Indexes</Menu.Item></Link>
 
         <Link
+          to={ROUTER_PATH.DATABASES}><Menu.Item className='nav-bar-desktop-item' key={ROUTER_PATH.DATABASES}
+                                              id={ROUTER_PATH.DATABASES} as="span"
+                                              active={activeItem === ROUTER_PATH.DATABASES}
+                                              onClick={this.handleItemClick} link>Databases</Menu.Item></Link>
+
+        <Link
           to={ROUTER_PATH.SETTINGS}><Menu.Item className='nav-bar-desktop-item' key={ROUTER_PATH.SETTINGS}
                                                id={ROUTER_PATH.SETTINGS} as="span"
                                                active={activeItem === ROUTER_PATH.SETTINGS}

@@ -3,8 +3,9 @@
 export const ROUTER_PATH = {
   LOGIN: '/login',
   REGISTER: '/register',
-  INDEXES: '/',
-  SETTINGS: '/settings'
+  INDEXES: '/indexes',
+  SETTINGS: '/settings',
+  DATABASES: '/'
 };
 
 export const AUTHENTICATION = {
@@ -32,4 +33,9 @@ export const FIREBASE_AUTH_ERROR_ENUM_DETAILED = {
       '\n\nPlease try again later.'
     //TODO: How to do newline in Javascript?
   }
+};
+
+export const FIREBASE_PATH = {
+  FIRESTORE_INFO_BASE: 'firestore_info',
+  FIRESTORE_PROJECT: 'firestore_project'
 };

@@ -3,6 +3,7 @@ import {Redirect, Route, Switch} from 'react-router-dom'
 import {ROUTER_PATH} from "./Constants";
 import Indexes from "./Indexes";
 import Login from "./authentication/Login";
+import Databases from "./Databases";
 
 // AuthenticatedRoute added above App component
 const AuthenticatedRoute = ({component: Component, authenticated, ...rest}) => {
@@ -26,6 +27,9 @@ class Main extends Component {
         }}/>
         <AuthenticatedRoute authenticated={this.props.authenticated} exact path={ROUTER_PATH.INDEXES}
                             component={Indexes} currentUser={this.props.currentUser}/>
+        }}/>
+        <AuthenticatedRoute authenticated={this.props.authenticated} exact path={ROUTER_PATH.DATABASES}
+                            component={Databases} currentUser={this.props.currentUser}/>
         }}/>
       </Switch>
     )
