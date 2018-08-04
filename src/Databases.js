@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import {Icon, Segment, Table} from "semantic-ui-react";
+import {Icon, Loader, Segment, Table} from "semantic-ui-react";
 import AddLinkFirestore from "./AddLinkFirestore";
 import {firestore} from "./config/fire";
 import {FIREBASE_PATH, ROUTER_PATH} from "./Constants";
@@ -50,7 +50,8 @@ class Databases extends Component {
   constructor() {
     super();
     this.state = {
-      linkedDatabases: []
+      linkedDatabases: [],
+      showLoader: true
     };
   };
 
@@ -60,9 +61,9 @@ class Databases extends Component {
 
   render() {
 
-    let {linkedDatabases} = this.state;
+    let {linkedDatabases, showLoader} = this.state;
 
-    console.log('databases', linkedDatabases);
+    console.log('linkedDatabases', linkedDatabases);
 
     return (
       <Fragment>
@@ -79,25 +80,36 @@ class Databases extends Component {
                 <Table.HeaderCell> </Table.HeaderCell>
               </Table.Row>
             </Table.Header>
-            {linkedDatabases !== [] ?
-              <Table.Body>
-                {linkedDatabases.map(linkedDatabase =>
-                  <Table.Row key={linkedDatabase.id}>
-                    <Table.Cell>{linkedDatabase.projectId}</Table.Cell>
-                    <Table.Cell>{linkedDatabase.googleUserEmail}</Table.Cell>
-                    <Table.Cell><Link to={ROUTER_PATH.INDEXES}>View Indexes</Link></Table.Cell>
-                    <Table.Cell>
-                      <Icon name='delete' link onClick={() => {
-                      }}/>
-                    </Table.Cell>
-                  </Table.Row>
-                )}
-              </Table.Body> :
+
+            {showLoader ?
               <Table.Body>
                 <Table.Row>
-                  <Table.Cell>You haven't linked any databases yet.</Table.Cell>
+                  <Table.Cell>
+                    <Segment basic>
+                      <Loader active/>
+                    </Segment>
+                  </Table.Cell>
                 </Table.Row>
-              </Table.Body>
+              </Table.Body> :
+              linkedDatabases.length !== 0 ?
+                <Table.Body>
+                  {linkedDatabases.map(linkedDatabase =>
+                    <Table.Row key={linkedDatabase.id}>
+                      <Table.Cell>{linkedDatabase.projectId}</Table.Cell>
+                      <Table.Cell>{linkedDatabase.googleUserEmail}</Table.Cell>
+                      <Table.Cell><Link to={ROUTER_PATH.INDEXES}>View Indexes</Link></Table.Cell>
+                      <Table.Cell>
+                        <Icon name='delete' link onClick={() => {
+                        }}/>
+                      </Table.Cell>
+                    </Table.Row>
+                  )}
+                </Table.Body> :
+                <Table.Body>
+                  <Table.Row>
+                    <Table.Cell>You haven't linked any databases yet.</Table.Cell>
+                  </Table.Row>
+                </Table.Body>
             }
           </Table>
         </Segment>
