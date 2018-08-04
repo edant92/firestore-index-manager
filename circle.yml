@@ -1,0 +1,48 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/repo
+    docker:
+    - image: circleci/node:9.4.0
+    steps:
+    - checkout
+    - run:
+        name: env check
+        command: env
+    - run:
+        name: update-npm
+        command: 'sudo npm install -g npm@latest -g'
+    - restore_cache:
+        key: dependency-cache-{{ checksum "package.json" }}
+    - run:
+        name: install-npm-wee
+        command: npm install
+    - save_cache:
+        key: dependency-cache-{{ checksum "package.json" }}
+        paths:
+        - ./node_modules
+    - run:
+        name: test
+        command: npm test -- --coverage
+#    - run:
+#        name: code-coverage
+#        command: |
+#          sudo npm install -g codeclimate-test-reporter
+#          codeclimate-test-reporter < coverage/lcov.info
+#    - store_artifacts:
+#        path: test-results.xml
+#        prefix: tests
+#    - store_artifacts:
+#        path: coverage
+#        prefix: coverage
+#    - store_test_results:
+#        path: test-results.xml
+    - run:
+        name: Build Firebase Index Manager
+        command: npm run build
+#    - run:
+#        name: Install Firebase Admin Tools
+#        command: sudo npm install -g firebase-tools
+#    - run:
+#        name: Deploy Master to Firebase
+#        command: ./node_modules/.bin/firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
