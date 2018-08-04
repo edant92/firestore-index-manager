@@ -51,7 +51,9 @@ class AddLinkFirestore extends Component {
 
     firestore.collection(FIREBASE_PATH.FIRESTORE_INFO_BASE).doc(UID).collection(FIREBASE_PATH.FIRESTORE_PROJECT).add(
       firestoreInfo
-    )
+    ).then(() => {
+      this.handleClose();
+    })
   };
 
   render() {
