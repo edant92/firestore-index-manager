@@ -40,9 +40,9 @@ jobs:
     - run:
         name: Build Firebase Index Manager
         command: npm run build
-#    - run:
-#        name: Install Firebase Admin Tools
-#        command: sudo npm install -g firebase-tools
-#    - run:
-#        name: Deploy Master to Firebase
-#        command: ./node_modules/.bin/firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
+    - run:
+        name: Install Firebase Admin Tools
+        command: sudo npm install -g firebase-tools
+    - run:
+        name: Deploy Master to Firebase
+        command: ./node_modules/.bin/firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
