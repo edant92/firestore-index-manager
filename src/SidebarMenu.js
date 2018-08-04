@@ -75,6 +75,10 @@ class NavBar extends Component {
 
     let {activeItem, accessToken, googleUserName, googleUserEmail, googleUserPhoto} = this.state;
 
+    if (!this.props.authenticated) {
+      return ('')
+    }
+
     return (
 
       <Menu id='sidebar-menu' vertical fixed='top' borderless>
