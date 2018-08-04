@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Link, withRouter} from 'react-router-dom';
-import {Button, Feed, Image, Menu, Segment} from "semantic-ui-react";
+import {Button, Feed, Image, Menu} from "semantic-ui-react";
 import {AUTHENTICATION, ROUTER_PATH} from "./Constants";
 import {GoogleLogin, GoogleLogout} from "react-google-login";
 import {setAccessToken} from "./redux/actions";
