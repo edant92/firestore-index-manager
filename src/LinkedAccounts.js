@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 import {setActiveFirestoreDetails} from "./redux/actions";
 import LinkedDatabases from "./LinkedDatabases";
 import AddLinkedFirestoreDatabase from "./AddLinkedFirestoreDatabase";
+import ReauthenticateLinkedAccount from "./ReauthenticateLinkedAccount";
 
 const mapStateToProps = state => {
   return {
@@ -94,6 +95,7 @@ class LinkedAccountsRedux extends Component {
                     <List.Content>
                       <List.Header>{linkedAccount.googleUserName}</List.Header>
                       {linkedAccount.googleUserEmail}
+                      <ReauthenticateLinkedAccount currentUser={this.props.currentUser} linkedAccountId={linkedAccount.id}/>
                     </List.Content>
                   </List.Item>
                 </List>
