@@ -56,12 +56,12 @@ class AddLinkFirestore extends Component {
       <Modal trigger={
         <Button onClick={this.handleOpen}>
           <Icon name='linkify'/>
-          Link New Firestore Account
+          Link Firestore Account
         </Button>
       }
              open={this.state.modalOpen}
              onClose={this.handleClose}>
-        <Modal.Header>Link New Firestore Account</Modal.Header>
+        <Modal.Header>Link Firestore Account</Modal.Header>
         <Modal.Content>
           <Button fluid positive
                   content='Authenticate Firebase Google Account'

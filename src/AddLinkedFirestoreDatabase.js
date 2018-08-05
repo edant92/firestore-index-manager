@@ -1,4 +1,4 @@
-import {Button, Form, Icon, Modal} from "semantic-ui-react";
+import {Button, Form, Header, Icon, Modal} from "semantic-ui-react";
 import React, {Component} from "react";
 import {FIREBASE_PATH} from "./Constants";
 import {firestore} from './config/fire';
@@ -65,12 +65,18 @@ class AddLinkedFirestoreDatabase extends Component {
       <Modal trigger={
         <Button floated='right' onClick={this.handleOpen}>
           <Icon name='add'/>
-          Add New Firestore Database
+          Link Firestore Database
         </Button>
       }
              open={this.state.modalOpen}
              onClose={this.handleClose}>
-        <Modal.Header>Link New Firestore Database</Modal.Header>
+        <Modal.Header>
+          <Header>
+            Link Firestore Database
+            <Header.Subheader>Link a Firestore Database associated
+              to {this.props.linkedAccount.googleUserName} ({this.props.linkedAccount.googleUserEmail})</Header.Subheader>
+          </Header>
+        </Modal.Header>
         <Modal.Content>
           <Form>
             <Form.Input id='projectId' label='Project ID' type='text' placeholder='e.g. my-firebase-app'
