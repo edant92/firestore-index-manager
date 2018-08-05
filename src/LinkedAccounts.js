@@ -82,7 +82,7 @@ class LinkedAccountsRedux extends Component {
       return (
         <Fragment>
           {linkedAccounts.map((linkedAccount, index) =>
-            <Fragment>
+            <Fragment key={index}>
               <List divided verticalAlign='middle'>
                 <List.Item>
                   <List.Content floated='right'>
