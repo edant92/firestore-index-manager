@@ -22,11 +22,11 @@ class DatabasesRedux extends Component {
 
   getLinkedProjectDatabases = () => {
     const UID = this.props.currentUser.uid;
-    let linkedAccount = this.props.linkedAccount.id;
+    let linkedAccountId = this.props.linkedAccount.id;
     let linkedDatabasesRef = firestore.collection(FIREBASE_PATH.LINKED_ACCOUNTS_BASE).doc(UID).collection(FIREBASE_PATH.FIRESTORE_PROJECT)
-      .where('linkedAccountId', '==', linkedAccount);
+      .where('linkedAccountId', '==', linkedAccountId);
 
-    console.log('Getting linked databases from', linkedDatabasesRef);
+    console.log('Getting linked databases from', linkedAccountId);
 
     linkedDatabasesRef.get().then((querySnapshot) => {
 
@@ -36,12 +36,9 @@ class DatabasesRedux extends Component {
 
         let docData = doc.data();
 
-        console.log('docData', docData);
-
         let linkedDatabase = {
           id: doc.id,
           projectId: docData.projectId,
-          googleUserEmail: docData.googleUserEmail
         };
 
         console.log('linkedDatabase', linkedDatabase);
