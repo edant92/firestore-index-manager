@@ -6,6 +6,10 @@ import {firestore} from './config/fire';
 
 class ReauthenticateLinkedAccount extends Component {
 
+  state = {
+    accountAuthenticated: true
+  };
+
   responseGoogleSuccess = (response) => {
     let accessToken = response.accessToken;
     let googleUserName = response.w3.ig;
@@ -33,19 +37,49 @@ class ReauthenticateLinkedAccount extends Component {
     };
 
     const UID = this.props.currentUser.uid;
-    const linkedAccountId = this.props.linkedAccountId;
+    const linkedAccountId = this.props.linkedAccount.id;
 
     firestore.collection(FIREBASE_PATH.LINKED_ACCOUNTS_BASE).doc(UID).collection(FIREBASE_PATH.FIRESTORE_ACCOUNT)
       .doc(linkedAccountId).update(
       firestoreInfo
     ).then(() => {
-      //TODO: Update Reauth button to be disabled/not needed
+      this.setState({accountAuthenticated: true});
     })
   };
 
+  checkStillAuthenticated = () => {
+
+    let accessToken = this.props.linkedAccount.accessToken;
+
+    this.setState({indexesLoading: true});
+    console.log('Testing accessToken ' + accessToken + ' is still valid.');
+    fetch('https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=' + accessToken)
+      .then((response) => {
+          if (response.status === 400) {
+            throw new Error("Invalid Access Token Value");
+          }
+          return response.json()
+        }
+      ).then(() => {
+      console.log('Account is authenticated');
+      this.setState({accountAuthenticated: true});
+    }).catch((error) => {
+      this.setState({accountAuthenticated: false});
+      console.log('Account not authenticated', error);
+    });
+  };
+
+  componentDidMount() {
+    this.checkStillAuthenticated()
+  }
+
   render() {
+
+    let {accountAuthenticated} = this.state;
+
     return (
       <Button fluid positive
+              disabled={accountAuthenticated}
               as={GoogleLogin}
               discoveryDocs={AUTHENTICATION.DISCOVERY_DOCS}
               clientId={AUTHENTICATION.CLIENT_ID}

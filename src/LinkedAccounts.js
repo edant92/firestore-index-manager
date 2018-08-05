@@ -89,13 +89,12 @@ class LinkedAccountsRedux extends Component {
                 <List divided verticalAlign='middle'>
                   <List.Item>
                     <List.Content floated='right'>
-                      <AddLinkedFirestoreDatabase currentUser={this.props.currentUser} linkedAccount={linkedAccount}/>
+                      <ReauthenticateLinkedAccount currentUser={this.props.currentUser} linkedAccount={linkedAccount}/>
                     </List.Content>
                     <Image avatar src={linkedAccount.googleUserPhoto}/>
                     <List.Content>
                       <List.Header>{linkedAccount.googleUserName}</List.Header>
                       {linkedAccount.googleUserEmail}
-                      <ReauthenticateLinkedAccount currentUser={this.props.currentUser} linkedAccountId={linkedAccount.id}/>
                     </List.Content>
                   </List.Item>
                 </List>

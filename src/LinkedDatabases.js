@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import {Icon, Loader, Segment, Table} from "semantic-ui-react";
+import {Button, Icon, Loader, Segment, Table} from "semantic-ui-react";
 import {firestore} from "./config/fire";
 import {FIREBASE_PATH, ROUTER_PATH} from "./Constants";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {setAccessToken, setActiveFirestoreDetails} from "./redux/actions";
+import AddLinkedFirestoreDatabase from "./AddLinkedFirestoreDatabase";
 
 const mapStateToProps = state => {
   return {
@@ -78,9 +79,9 @@ class DatabasesRedux extends Component {
       <Table celled>
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell>Project ID</Table.HeaderCell>
-            <Table.HeaderCell> </Table.HeaderCell>
-            <Table.HeaderCell> </Table.HeaderCell>
+            <Table.HeaderCell width={10}>Project ID</Table.HeaderCell>
+            <Table.HeaderCell width={3}/>
+            <Table.HeaderCell width={3}/>
           </Table.Row>
         </Table.Header>
 
@@ -118,6 +119,14 @@ class DatabasesRedux extends Component {
               </Table.Row>
             </Table.Body>
         }
+        <Table.Footer fullWidth>
+          <Table.Row>
+            <Table.HeaderCell colSpan='3'>
+              <AddLinkedFirestoreDatabase currentUser={this.props.currentUser}
+                                          linkedAccount={this.props.linkedAccount}/>
+            </Table.HeaderCell>
+          </Table.Row>
+        </Table.Footer>
       </Table>
     )
 

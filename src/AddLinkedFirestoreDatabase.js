@@ -63,7 +63,7 @@ class AddLinkedFirestoreDatabase extends Component {
   render() {
     return (
       <Modal trigger={
-        <Button onClick={this.handleOpen}>
+        <Button floated='right' onClick={this.handleOpen}>
           <Icon name='add'/>
           Add New Firestore Database
         </Button>
