@@ -27,10 +27,8 @@ class Main extends Component {
         }}/>
         <AuthenticatedRoute authenticated={this.props.authenticated} exact path={ROUTER_PATH.INDEXES}
                             component={Indexes} currentUser={this.props.currentUser}/>
-        }}/>
         <AuthenticatedRoute authenticated={this.props.authenticated} exact path={ROUTER_PATH.DATABASES}
                             component={Dashboard} currentUser={this.props.currentUser}/>
-        }}/>
       </Switch>
     )
   };
