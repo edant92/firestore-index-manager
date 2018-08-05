@@ -76,18 +76,23 @@ class LinkedAccountsRedux extends Component {
 
     console.log('linkedAccounts', linkedAccounts);
 
-    return (
-      <Fragment>
-        {linkedAccounts.map(linkedAccount =>
-          <Segment key={linkedAccount.id}>
-            <Header sub dividing>{linkedAccount.googleUserEmail}</Header>
-            <AddLinkedFirestoreDatabase currentUser={this.props.currentUser} linkedAccount={linkedAccount}/>
-            <Databases currentUser={this.props.currentUser} linkedAccount={linkedAccount}/>
-          </Segment>
-        )}
-      </Fragment>
-    )
-
+    if (showLoader) {
+      return (
+        <Loader active/>
+      )
+    } else {
+      return (
+        <Fragment>
+          {linkedAccounts.map(linkedAccount =>
+            <Segment key={linkedAccount.id}>
+              <Header sub dividing>{linkedAccount.googleUserEmail}</Header>
+              <AddLinkedFirestoreDatabase currentUser={this.props.currentUser} linkedAccount={linkedAccount}/>
+              <Databases currentUser={this.props.currentUser} linkedAccount={linkedAccount}/>
+            </Segment>
+          )}
+        </Fragment>
+      )
+    }
 
   }
 
