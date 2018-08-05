@@ -1,20 +1,29 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import {Icon, Loader, Segment, Table} from "semantic-ui-react";
-import AddLinkFirestore from "./AddLinkFirestore";
 import {firestore} from "./config/fire";
 import {FIREBASE_PATH, ROUTER_PATH} from "./Constants";
 import {Link} from "react-router-dom";
-import Indexes from "./Indexes";
+import {connect} from "react-redux";
+import {setActiveFirestoreDetails} from "./redux/actions";
 
-class Databases extends Component {
-
-  handleChangeInput = (event) => {
-    this.setState({[event.target.id]: event.target.value});
+const mapStateToProps = state => {
+  return {
+    activeFirestoreDetails: state.activeFirestoreDetails,
   };
+};
 
-  getLinkedDatabases = () => {
+const mapDispatchToProps = dispatch => {
+  return {
+    setActiveFirestoreDetails: activeFirestoreDetails => dispatch(setActiveFirestoreDetails(activeFirestoreDetails))
+  };
+};
+
+class DatabasesRedux extends Component {
+
+  getLinkedProjectDatabases = () => {
     const UID = this.props.currentUser.uid;
-    let linkedDatabasesRef = firestore.collection(FIREBASE_PATH.FIRESTORE_INFO_BASE).doc(UID).collection(FIREBASE_PATH.FIRESTORE_PROJECT);
+    let linkedDatabasesRef = firestore.collection(FIREBASE_PATH.LINKED_ACCOUNTS_BASE).doc(UID).collection(FIREBASE_PATH.FIRESTORE_PROJECT)
+      .orderBy('projectId', 'desc');
 
     console.log('Getting linked databases from', linkedDatabasesRef);
 
@@ -56,7 +65,7 @@ class Databases extends Component {
   };
 
   componentDidMount() {
-    this.getLinkedDatabases();
+    this.getLinkedProjectDatabases();
   }
 
   render() {
@@ -66,54 +75,49 @@ class Databases extends Component {
     console.log('linkedDatabases', linkedDatabases);
 
     return (
-      <Fragment>
-        <Segment>
-          <AddLinkFirestore currentUser={this.props.currentUser}/>
-        </Segment>
-        <Segment>
-          <Table celled>
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell>Project ID</Table.HeaderCell>
-                <Table.HeaderCell>Linked Account / Email</Table.HeaderCell>
-                <Table.HeaderCell> </Table.HeaderCell>
-                <Table.HeaderCell> </Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
+      <Table celled>
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell>Project ID</Table.HeaderCell>
+            <Table.HeaderCell>Linked Account / Email</Table.HeaderCell>
+            <Table.HeaderCell> </Table.HeaderCell>
+            <Table.HeaderCell> </Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
 
-            {showLoader ?
-              <Table.Body>
-                <Table.Row>
+        {showLoader ?
+          <Table.Body>
+            <Table.Row>
+              <Table.Cell>
+                <Segment basic>
+                  <Loader active/>
+                </Segment>
+              </Table.Cell>
+            </Table.Row>
+          </Table.Body> :
+          linkedDatabases.length !== 0 ?
+            <Table.Body>
+              {linkedDatabases.map(linkedDatabase =>
+                <Table.Row key={linkedDatabase.id}>
+                  <Table.Cell>{linkedDatabase.projectId}</Table.Cell>
+                  <Table.Cell>{linkedDatabase.googleUserEmail}</Table.Cell>
+                  <Table.Cell><Link to={ROUTER_PATH.INDEXES}
+                                    onClick={() => this.setActiveFirestoreDetails(linkedDatabase)}>View
+                    Indexes</Link></Table.Cell>
                   <Table.Cell>
-                    <Segment basic>
-                      <Loader active/>
-                    </Segment>
+                    <Icon name='delete' link onClick={() => {
+                    }}/>
                   </Table.Cell>
                 </Table.Row>
-              </Table.Body> :
-              linkedDatabases.length !== 0 ?
-                <Table.Body>
-                  {linkedDatabases.map(linkedDatabase =>
-                    <Table.Row key={linkedDatabase.id}>
-                      <Table.Cell>{linkedDatabase.projectId}</Table.Cell>
-                      <Table.Cell>{linkedDatabase.googleUserEmail}</Table.Cell>
-                      <Table.Cell><Link to={ROUTER_PATH.INDEXES}>View Indexes</Link></Table.Cell>
-                      <Table.Cell>
-                        <Icon name='delete' link onClick={() => {
-                        }}/>
-                      </Table.Cell>
-                    </Table.Row>
-                  )}
-                </Table.Body> :
-                <Table.Body>
-                  <Table.Row>
-                    <Table.Cell>You haven't linked any databases yet.</Table.Cell>
-                  </Table.Row>
-                </Table.Body>
-            }
-          </Table>
-        </Segment>
-      </Fragment>
+              )}
+            </Table.Body> :
+            <Table.Body>
+              <Table.Row>
+                <Table.Cell>You haven't linked any databases yet.</Table.Cell>
+              </Table.Row>
+            </Table.Body>
+        }
+      </Table>
     )
 
 
@@ -121,5 +125,7 @@ class Databases extends Component {
 
 
 }
+
+const Databases = connect(mapStateToProps, mapDispatchToProps)(DatabasesRedux);
 
 export default Databases;

@@ -4,6 +4,7 @@ import {ROUTER_PATH} from "./Constants";
 import Indexes from "./Indexes";
 import Login from "./authentication/Login";
 import Databases from "./Databases";
+import Dashboard from "./Dashboard";
 
 // AuthenticatedRoute added above App component
 const AuthenticatedRoute = ({component: Component, authenticated, ...rest}) => {
@@ -29,7 +30,7 @@ class Main extends Component {
                             component={Indexes} currentUser={this.props.currentUser}/>
         }}/>
         <AuthenticatedRoute authenticated={this.props.authenticated} exact path={ROUTER_PATH.DATABASES}
-                            component={Databases} currentUser={this.props.currentUser}/>
+                            component={Dashboard} currentUser={this.props.currentUser}/>
         }}/>
       </Switch>
     )

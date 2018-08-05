@@ -4,7 +4,7 @@ import {GoogleLogin} from "react-google-login";
 import {AUTHENTICATION, FIREBASE_PATH} from "./Constants";
 import {firestore} from './config/fire';
 
-class AddLinkFirestore extends Component {
+class AddLinkedFirestoreDatabase extends Component {
 
   state = {modalOpen: false};
 
@@ -17,65 +17,66 @@ class AddLinkFirestore extends Component {
     this.setState({[event.target.id]: event.target.value});
   };
 
-  responseGoogleSuccess = (response) => {
-    let accessToken = response.accessToken;
-    //this.props.setAccessToken(accessToken);
-    let googleUserName = response.w3.ig;
-    let googleUserEmail = response.w3.U3;
-    let googleUserPhoto = response.w3.Paa;
-    this.setState({accessToken, googleUserName, googleUserEmail, googleUserPhoto});
-    console.log(accessToken, googleUserName, googleUserEmail, googleUserPhoto);
-  };
 
-  responseGoogleFailure = (response) => {
-    console.log(response);
-    //TODO: Update UI if unsuccessful (use Error Message and get Error?)
-    //this.props.setAccessToken('');
+  checkConnection = () => {
+
+    let {projectId} = this.state;
+
+    let accessToken = this.props.linkedAccount.accessToken;
+
+    this.setState({indexesLoading: true});
+    console.log('Getting test indexes for ' + projectId + ' in ' + accessToken);
+    fetch('https://firestore.googleapis.com/v1beta1/projects/' + projectId + '/databases/(default)/indexes', {
+      headers: {
+        'Authorization': 'Bearer ' + accessToken
+      }
+    }).then((response) => response.json()
+    ).then((data) => {
+      console.log(data.indexes);
+    }).catch((error) => {
+      console.log(error);
+    });
   };
 
   handleLinkCreation = () => {
-
     this.saveToFirebase();
-
   };
 
   saveToFirebase = () => {
 
-    let {projectId, accessToken, googleUserName, googleUserEmail, googleUserPhoto} = this.state;
+    let {projectId} = this.state;
+
+    let linkedAccountId = this.props.linkedAccount.id;
 
     let firestoreInfo = {
-      projectId, accessToken, googleUserName, googleUserEmail, googleUserPhoto
+      projectId, linkedAccountId
     };
 
     const UID = this.props.currentUser.uid;
 
-    firestore.collection(FIREBASE_PATH.FIRESTORE_INFO_BASE).doc(UID).collection(FIREBASE_PATH.FIRESTORE_PROJECT).add(
+    firestore.collection(FIREBASE_PATH.LINKED_ACCOUNTS_BASE).doc(UID).collection(FIREBASE_PATH.FIRESTORE_PROJECT).add(
       firestoreInfo
     ).then(() => {
       this.handleClose();
     })
   };
 
+  constructor() {
+    super();
+  };
+
   render() {
     return (
       <Modal trigger={
         <Button onClick={this.handleOpen}>
-          <Icon name='linkify'/>
-          Link New Firestore Database
+          <Icon name='add'/>
+          Add New Firestore Database
         </Button>
       }
              open={this.state.modalOpen}
              onClose={this.handleClose}>
         <Modal.Header>Link New Firestore Database</Modal.Header>
         <Modal.Content>
-          <Button fluid positive
-                  content='Authenticate Firebase Google Account'
-                  as={GoogleLogin}
-                  discoveryDocs={AUTHENTICATION.DISCOVERY_DOCS}
-                  clientId={AUTHENTICATION.CLIENT_ID}
-                  scope={AUTHENTICATION.SCOPES.join(' ')}
-                  onSuccess={this.responseGoogleSuccess}
-                  onFailure={this.responseGoogleFailure}/>
           <Form>
             <Form.Input id='projectId' label='Project ID' type='text' placeholder='e.g. my-firebase-app'
                         onChange={this.handleChangeInput} required fluid/>
@@ -84,6 +85,9 @@ class AddLinkFirestore extends Component {
         <Modal.Actions>
           <Button color='red' onClick={this.handleClose}>
             <Icon name='remove'/> Cancel
+          </Button>
+          <Button color='blue' onClick={this.checkConnection}>
+            Check Connection
           </Button>
           <Button color='green' onClick={this.handleLinkCreation}>
             <Icon name='checkmark'/> Link
@@ -95,4 +99,4 @@ class AddLinkFirestore extends Component {
 
 }
 
-export default AddLinkFirestore
+export default AddLinkedFirestoreDatabase

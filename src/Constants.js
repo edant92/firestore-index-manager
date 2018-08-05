@@ -36,6 +36,7 @@ export const FIREBASE_AUTH_ERROR_ENUM_DETAILED = {
 };
 
 export const FIREBASE_PATH = {
-  FIRESTORE_INFO_BASE: 'firestore_info',
+  LINKED_ACCOUNTS_BASE: 'linked_accounts',
+  FIRESTORE_ACCOUNT: 'firestore_account',
   FIRESTORE_PROJECT: 'firestore_project'
 };
