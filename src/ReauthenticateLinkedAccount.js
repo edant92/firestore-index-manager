@@ -76,20 +76,27 @@ class ReauthenticateLinkedAccount extends Component {
   render() {
 
     let {accountAuthenticated} = this.state;
-
-    return (
-      <Button fluid positive
-              disabled={accountAuthenticated}
-              as={GoogleLogin}
-              discoveryDocs={AUTHENTICATION.DISCOVERY_DOCS}
-              clientId={AUTHENTICATION.CLIENT_ID}
-              scope={AUTHENTICATION.SCOPES.join(' ')}
-              onSuccess={this.responseGoogleSuccess}
-              onFailure={this.responseGoogleFailure}>
-        <Icon name='refresh'/>
-        Reauthenticate
-      </Button>
-    )
+    
+    if (accountAuthenticated) {
+      return (
+        <Button fluid positive disabled>
+          Authenticated
+        </Button>
+      )
+    } else {
+      return (
+        <Button fluid negative
+                as={GoogleLogin}
+                discoveryDocs={AUTHENTICATION.DISCOVERY_DOCS}
+                clientId={AUTHENTICATION.CLIENT_ID}
+                scope={AUTHENTICATION.SCOPES.join(' ')}
+                onSuccess={this.responseGoogleSuccess}
+                onFailure={this.responseGoogleFailure}>
+          <Icon name='refresh'/>
+          Reauthenticate
+        </Button>
+      )
+    }
   }
 
 }
