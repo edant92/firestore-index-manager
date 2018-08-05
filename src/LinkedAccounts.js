@@ -96,7 +96,7 @@ class LinkedAccountsRedux extends Component {
                 </List.Item>
               </List>
               <LinkedDatabases currentUser={this.props.currentUser} linkedAccount={linkedAccount}/>
-              {index < linkedAccounts.length - 1 && <Divider/>}
+              {index < linkedAccounts.length - 1 && <Divider section/>}
             </Fragment>
           )}
         </Fragment>
