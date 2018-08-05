@@ -3,7 +3,6 @@ import {Redirect, Route, Switch} from 'react-router-dom'
 import {ROUTER_PATH} from "./Constants";
 import Indexes from "./Indexes";
 import Login from "./authentication/Login";
-import Databases from "./Databases";
 import Dashboard from "./Dashboard";
 
 // AuthenticatedRoute added above App component

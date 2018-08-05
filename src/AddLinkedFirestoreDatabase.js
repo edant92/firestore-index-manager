@@ -1,7 +1,6 @@
 import {Button, Form, Icon, Modal} from "semantic-ui-react";
 import React, {Component} from "react";
-import {GoogleLogin} from "react-google-login";
-import {AUTHENTICATION, FIREBASE_PATH} from "./Constants";
+import {FIREBASE_PATH} from "./Constants";
 import {firestore} from './config/fire';
 
 class AddLinkedFirestoreDatabase extends Component {
@@ -59,10 +58,6 @@ class AddLinkedFirestoreDatabase extends Component {
     ).then(() => {
       this.handleClose();
     })
-  };
-
-  constructor() {
-    super();
   };
 
   render() {

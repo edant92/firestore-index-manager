@@ -1,9 +1,7 @@
 import React, {Component, Fragment} from 'react';
-import {Header, Icon, Loader, Segment, Table} from "semantic-ui-react";
-import AddLinkedAccount from "./AddLinkedAccount";
+import {Header, Loader, Segment} from "semantic-ui-react";
 import {firestore} from "./config/fire";
-import {FIREBASE_PATH, ROUTER_PATH} from "./Constants";
-import {Link} from "react-router-dom";
+import {FIREBASE_PATH} from "./Constants";
 import {connect} from "react-redux";
 import {setActiveFirestoreDetails} from "./redux/actions";
 import Databases from "./Databases";

@@ -1,4 +1,4 @@
-import {Button, Form, Icon, Modal} from "semantic-ui-react";
+import {Button, Icon, Modal} from "semantic-ui-react";
 import React, {Component} from "react";
 import {GoogleLogin} from "react-google-login";
 import {AUTHENTICATION, FIREBASE_PATH} from "./Constants";

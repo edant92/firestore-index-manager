@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import './App.css';
-import {Breadcrumb, Button, Icon, Label, Loader, Message, Table} from "semantic-ui-react";
+import {Breadcrumb, Button, Icon, Label, Loader, Table} from "semantic-ui-react";
 import {connect} from "react-redux";
 
 const mapStateToProps = state => {
