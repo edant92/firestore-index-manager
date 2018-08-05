@@ -80,7 +80,6 @@ class DatabasesRedux extends Component {
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Project ID</Table.HeaderCell>
-            <Table.HeaderCell>Linked Account / Email</Table.HeaderCell>
             <Table.HeaderCell> </Table.HeaderCell>
             <Table.HeaderCell> </Table.HeaderCell>
           </Table.Row>
@@ -101,7 +100,6 @@ class DatabasesRedux extends Component {
               {linkedDatabases.map(linkedDatabase =>
                 <Table.Row key={linkedDatabase.id}>
                   <Table.Cell>{linkedDatabase.projectId}</Table.Cell>
-                  <Table.Cell>{linkedDatabase.googleUserEmail}</Table.Cell>
                   <Table.Cell><Link to={ROUTER_PATH.INDEXES}
                                     onClick={() => this.setActiveFirestoreDetails(linkedDatabase)}>View
                     Indexes</Link></Table.Cell>
