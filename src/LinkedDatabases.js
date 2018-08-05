@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Icon, Loader, Segment, Table} from "semantic-ui-react";
+import {Icon, Loader, Segment, Table} from "semantic-ui-react";
 import {firestore} from "./config/fire";
 import {FIREBASE_PATH, ROUTER_PATH} from "./Constants";
 import {Link} from "react-router-dom";

@@ -5,7 +5,6 @@ import {FIREBASE_PATH} from "./Constants";
 import {connect} from "react-redux";
 import {setActiveFirestoreDetails} from "./redux/actions";
 import LinkedDatabases from "./LinkedDatabases";
-import AddLinkedFirestoreDatabase from "./AddLinkedFirestoreDatabase";
 import ReauthenticateLinkedAccount from "./ReauthenticateLinkedAccount";
 
 const mapStateToProps = state => {
