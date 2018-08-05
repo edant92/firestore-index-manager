@@ -93,7 +93,7 @@ class ReauthenticateLinkedAccount extends Component {
                 onSuccess={this.responseGoogleSuccess}
                 onFailure={this.responseGoogleFailure}>
           <Icon name='refresh'/>
-          Reauthenticate
+          Re-authenticate
         </Button>
       )
     }
