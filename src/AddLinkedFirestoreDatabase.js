@@ -1,13 +1,26 @@
-import {Button, Form, Header, Icon, Modal} from "semantic-ui-react";
+import {Button, Form, Header, Icon, Message, Modal} from "semantic-ui-react";
 import React, {Component} from "react";
 import {FIREBASE_PATH} from "./Constants";
 import {firestore} from './config/fire';
 
 class AddLinkedFirestoreDatabase extends Component {
 
-  state = {modalOpen: false};
+  state = {
+    modalOpen: false,
+    connectionTestLoaderActive: false,
+    connectionTestSuccessful: false,
+    connectionTestError: false,
+    connectionTestErrorMessage: ''
 
-  handleOpen = () => this.setState({modalOpen: true});
+  };
+
+  handleOpen = () => this.setState({
+    modalOpen: true,
+    connectionTestLoaderActive: false,
+    connectionTestSuccessful: false,
+    connectionTestError: false,
+    connectionTestErrorMessage: ''
+  });
 
   handleClose = () => this.setState({modalOpen: false});
 
@@ -23,17 +36,43 @@ class AddLinkedFirestoreDatabase extends Component {
 
     let accessToken = this.props.linkedAccount.accessToken;
 
-    this.setState({indexesLoading: true});
+    this.setState({connectionTestLoaderActive: true});
     console.log('Getting test indexes for ' + projectId + ' in ' + accessToken);
     fetch('https://firestore.googleapis.com/v1beta1/projects/' + projectId + '/databases/(default)/indexes', {
       headers: {
         'Authorization': 'Bearer ' + accessToken
       }
-    }).then((response) => response.json()
+    }).then((response) => {
+
+        if (response.status === 401) {
+          throw new Error("Account Unauthorised. Please re-authenticate");
+        }
+        if (response.status === 403) {
+          throw new Error('Unable to find Firestore Database \'' + projectId + '\' for this account.');
+        }
+
+        return response.json()
+      }
     ).then((data) => {
+      this.setState({
+        connectionTestLoaderActive: false,
+        connectionTestSuccessful: true,
+        connectionTestError: false,
+        connectionTestErrorMessage: ''
+      });
       console.log(data.indexes);
     }).catch((error) => {
-      console.log(error);
+
+      let errorText = `${error}`;
+      let connectionTestErrorMessage = errorText.replace('Error: ','');
+
+      this.setState({
+        connectionTestLoaderActive: false,
+        connectionTestSuccessful: false,
+        connectionTestError: true,
+        connectionTestErrorMessage
+      });
+      console.log('error: ', error);
     });
   };
 
@@ -61,6 +100,9 @@ class AddLinkedFirestoreDatabase extends Component {
   };
 
   render() {
+
+    let {connectionTestLoaderActive, connectionTestSuccessful, connectionTestError, connectionTestErrorMessage} = this.state;
+
     return (
       <Modal trigger={
         <Button floated='right' onClick={this.handleOpen}>
@@ -80,19 +122,33 @@ class AddLinkedFirestoreDatabase extends Component {
         <Modal.Content>
           <Form>
             <Form.Input id='projectId' label='Project ID' type='text' placeholder='e.g. my-firebase-app'
-                        onChange={this.handleChangeInput} required fluid/>
+                        onChange={this.handleChangeInput} required fluid error={connectionTestError}/>
           </Form>
+          {connectionTestError &&
+          <Message negative>
+            <Message.Header>Error Linking Database</Message.Header>
+            <p>{connectionTestErrorMessage}</p>
+          </Message>
+          }
         </Modal.Content>
         <Modal.Actions>
           <Button color='red' onClick={this.handleClose}>
             <Icon name='remove'/> Cancel
           </Button>
-          <Button color='blue' onClick={this.checkConnection}>
-            Check Connection
-          </Button>
-          <Button color='green' onClick={this.handleLinkCreation}>
-            <Icon name='checkmark'/> Link
-          </Button>
+
+          {connectionTestLoaderActive ?
+            <Button loading>Test Connection</Button>
+            :
+            connectionTestSuccessful ?
+              <Button color='green' onClick={this.handleLinkCreation}>
+                <Icon name='checkmark'/> Link
+              </Button>
+              :
+              <Button color='blue' onClick={this.checkConnection}>
+                Test Connection
+              </Button>
+
+          }
         </Modal.Actions>
       </Modal>
     )
