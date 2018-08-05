@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import {Header, Loader, Segment} from "semantic-ui-react";
+import {Image, List, Loader, Segment} from "semantic-ui-react";
 import {firestore} from "./config/fire";
 import {FIREBASE_PATH} from "./Constants";
 import {connect} from "react-redux";
@@ -40,7 +40,9 @@ class LinkedAccountsRedux extends Component {
         let linkedAccount = {
           id: doc.id,
           accessToken: docData.accessToken,
-          googleUserEmail: docData.googleUserEmail
+          googleUserEmail: docData.googleUserEmail,
+          googleUserName: docData.googleUserName,
+          googleUserPhoto: docData.googleUserPhoto
         };
 
         console.log('linkedAccount', linkedAccount);
@@ -83,8 +85,19 @@ class LinkedAccountsRedux extends Component {
         <Fragment>
           {linkedAccounts.map(linkedAccount =>
             <Segment key={linkedAccount.id}>
-              <Header sub dividing>{linkedAccount.googleUserEmail}</Header>
-              <AddLinkedFirestoreDatabase currentUser={this.props.currentUser} linkedAccount={linkedAccount}/>
+
+              <List divided verticalAlign='middle'>
+                <List.Item>
+                  <List.Content floated='right'>
+                    <AddLinkedFirestoreDatabase currentUser={this.props.currentUser} linkedAccount={linkedAccount}/>
+                  </List.Content>
+                  <Image avatar src={linkedAccount.googleUserPhoto}/>
+                  <List.Content>
+                    <List.Header>{linkedAccount.googleUserName}</List.Header>
+                    {linkedAccount.googleUserEmail}
+                  </List.Content>
+                </List.Item>
+              </List>
               <Databases currentUser={this.props.currentUser} linkedAccount={linkedAccount}/>
             </Segment>
           )}
@@ -93,7 +106,6 @@ class LinkedAccountsRedux extends Component {
     }
 
   }
-
 
 }
 
