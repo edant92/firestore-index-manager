@@ -22,8 +22,9 @@ class DatabasesRedux extends Component {
 
   getLinkedProjectDatabases = () => {
     const UID = this.props.currentUser.uid;
+    let linkedAccount = this.props.linkedAccount.id;
     let linkedDatabasesRef = firestore.collection(FIREBASE_PATH.LINKED_ACCOUNTS_BASE).doc(UID).collection(FIREBASE_PATH.FIRESTORE_PROJECT)
-      .orderBy('projectId', 'desc');
+      .where('linkedAccountId', '==', linkedAccount);
 
     console.log('Getting linked databases from', linkedDatabasesRef);
 
