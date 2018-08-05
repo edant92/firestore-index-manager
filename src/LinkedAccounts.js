@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import {Image, List, Loader, Segment} from "semantic-ui-react";
+import {Divider, Image, List, Loader} from "semantic-ui-react";
 import {firestore} from "./config/fire";
 import {FIREBASE_PATH} from "./Constants";
 import {connect} from "react-redux";
@@ -81,9 +81,8 @@ class LinkedAccountsRedux extends Component {
     } else {
       return (
         <Fragment>
-          {linkedAccounts.map(linkedAccount =>
-            <Segment key={linkedAccount.id}>
-
+          {linkedAccounts.map((linkedAccount, index) =>
+            <Fragment>
               <List divided verticalAlign='middle'>
                 <List.Item>
                   <List.Content floated='right'>
@@ -97,7 +96,8 @@ class LinkedAccountsRedux extends Component {
                 </List.Item>
               </List>
               <LinkedDatabases currentUser={this.props.currentUser} linkedAccount={linkedAccount}/>
-            </Segment>
+              {index < linkedAccounts.length - 1 && <Divider/>}
+            </Fragment>
           )}
         </Fragment>
       )
