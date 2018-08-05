@@ -13,9 +13,9 @@ const mapStateToProps = state => {
 class IndexesRedux extends Component {
 
   getIndexes = () => {
-
-    let {projectId, accessToken} = this.props.activeFirestoreDetails;
-
+    let accessToken = this.props.accessToken;
+    let projectId = this.props.match.params.id;
+    console.log(projectId + ' for ' + accessToken);
     this.setState({indexesLoading: true});
     console.log('Refreshing List of Indexes');
     fetch('https://firestore.googleapis.com/v1beta1/projects/' + projectId + '/databases/(default)/indexes', {

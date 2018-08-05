@@ -3,7 +3,8 @@
 export const ROUTER_PATH = {
   LOGIN: '/login',
   REGISTER: '/register',
-  INDEXES: '/indexes',
+  INDEXES: '/indexes/:id',
+  DASHBOARD_TO_INDEX: 'indexes',
   SETTINGS: '/settings',
   DATABASES: '/'
 };

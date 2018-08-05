@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import {Divider, Image, List, Loader} from "semantic-ui-react";
+import {Divider, Image, List, Loader, Segment} from "semantic-ui-react";
 import {firestore} from "./config/fire";
 import {FIREBASE_PATH} from "./Constants";
 import {connect} from "react-redux";
@@ -81,24 +81,30 @@ class LinkedAccountsRedux extends Component {
     } else {
       return (
         <Fragment>
-          {linkedAccounts.map((linkedAccount, index) =>
-            <Fragment key={index}>
-              <List divided verticalAlign='middle'>
-                <List.Item>
-                  <List.Content floated='right'>
-                    <AddLinkedFirestoreDatabase currentUser={this.props.currentUser} linkedAccount={linkedAccount}/>
-                  </List.Content>
-                  <Image avatar src={linkedAccount.googleUserPhoto}/>
-                  <List.Content>
-                    <List.Header>{linkedAccount.googleUserName}</List.Header>
-                    {linkedAccount.googleUserEmail}
-                  </List.Content>
-                </List.Item>
-              </List>
-              <LinkedDatabases currentUser={this.props.currentUser} linkedAccount={linkedAccount}/>
-              {index < linkedAccounts.length - 1 && <Divider section/>}
-            </Fragment>
-          )}
+
+          {linkedAccounts.length !== 0 ?
+            linkedAccounts.map((linkedAccount, index) =>
+              <Fragment key={index}>
+                <List divided verticalAlign='middle'>
+                  <List.Item>
+                    <List.Content floated='right'>
+                      <AddLinkedFirestoreDatabase currentUser={this.props.currentUser} linkedAccount={linkedAccount}/>
+                    </List.Content>
+                    <Image avatar src={linkedAccount.googleUserPhoto}/>
+                    <List.Content>
+                      <List.Header>{linkedAccount.googleUserName}</List.Header>
+                      {linkedAccount.googleUserEmail}
+                    </List.Content>
+                  </List.Item>
+                </List>
+                <LinkedDatabases currentUser={this.props.currentUser} linkedAccount={linkedAccount}/>
+                {index < linkedAccounts.length - 1 && <Divider section/>}
+              </Fragment>
+            )
+            :
+            <Fragment>
+              You haven't linked any Firebase Accounts yet.
+            </Fragment>}
         </Fragment>
       )
     }

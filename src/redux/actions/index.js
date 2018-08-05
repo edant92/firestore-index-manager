@@ -1,5 +1,5 @@
 import {
-  SET_ACCESS_TOKEN,
+  SET_ACCESS_TOKEN, SET_ACTIVE_FIRESTORE_DETAILS,
 } from "../constants/action-types"
 
 export const setAccessToken = accessToken => ({
@@ -8,6 +8,6 @@ export const setAccessToken = accessToken => ({
 });
 
 export const setActiveFirestoreDetails = activeFirestoreDetails => ({
-  type: SET_ACCESS_TOKEN,
+  type: SET_ACTIVE_FIRESTORE_DETAILS,
   payload: activeFirestoreDetails
 });

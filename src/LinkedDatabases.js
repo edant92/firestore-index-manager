@@ -4,17 +4,19 @@ import {firestore} from "./config/fire";
 import {FIREBASE_PATH, ROUTER_PATH} from "./Constants";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
-import {setActiveFirestoreDetails} from "./redux/actions";
+import {setAccessToken, setActiveFirestoreDetails} from "./redux/actions";
 
 const mapStateToProps = state => {
   return {
     activeFirestoreDetails: state.activeFirestoreDetails,
+    accessToken: state.accessToken
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    setActiveFirestoreDetails: activeFirestoreDetails => dispatch(setActiveFirestoreDetails(activeFirestoreDetails))
+    setActiveFirestoreDetails: activeFirestoreDetails => dispatch(setActiveFirestoreDetails(activeFirestoreDetails)),
+    setAccessToken: accessToken => dispatch(setAccessToken(accessToken))
   };
 };
 
@@ -97,9 +99,12 @@ class DatabasesRedux extends Component {
               {linkedDatabases.map(linkedDatabase =>
                 <Table.Row key={linkedDatabase.id}>
                   <Table.Cell>{linkedDatabase.projectId}</Table.Cell>
-                  <Table.Cell><Link to={ROUTER_PATH.INDEXES}
-                                    onClick={() => this.setActiveFirestoreDetails(linkedDatabase)}>View
-                    Indexes</Link></Table.Cell>
+                  <Table.Cell>
+                    <Link to={ROUTER_PATH.DASHBOARD_TO_INDEX + '/' + linkedDatabase.projectId}
+                          onClick={() => this.props.setAccessToken(this.props.linkedAccount.accessToken)}>
+                      View Indexes
+                    </Link>
+                  </Table.Cell>
                   <Table.Cell>
                     <Icon name='delete' link onClick={() => {
                     }}/>
