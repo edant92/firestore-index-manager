@@ -4,7 +4,7 @@ import {firestore} from "./config/fire";
 import {FIREBASE_PATH} from "./Constants";
 import {connect} from "react-redux";
 import {setActiveFirestoreDetails} from "./redux/actions";
-import Databases from "./Databases";
+import LinkedDatabases from "./LinkedDatabases";
 import AddLinkedFirestoreDatabase from "./AddLinkedFirestoreDatabase";
 
 const mapStateToProps = state => {
@@ -96,7 +96,7 @@ class LinkedAccountsRedux extends Component {
                   </List.Content>
                 </List.Item>
               </List>
-              <Databases currentUser={this.props.currentUser} linkedAccount={linkedAccount}/>
+              <LinkedDatabases currentUser={this.props.currentUser} linkedAccount={linkedAccount}/>
             </Segment>
           )}
         </Fragment>

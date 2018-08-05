@@ -122,6 +122,6 @@ class DatabasesRedux extends Component {
 
 }
 
-const Databases = connect(mapStateToProps, mapDispatchToProps)(DatabasesRedux);
+const LinkedDatabases = connect(mapStateToProps, mapDispatchToProps)(DatabasesRedux);
 
-export default Databases;
+export default LinkedDatabases;
