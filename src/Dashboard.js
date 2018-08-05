@@ -8,10 +8,10 @@ class Dashboard extends Component {
   render() {
     return (
       <Fragment>
-        <Segment>
+        <Segment attached='top'>
           <AddLinkedAccount currentUser={this.props.currentUser}/>
         </Segment>
-        <Segment>
+        <Segment attached='bottom'>
           <LinkedAccounts currentUser={this.props.currentUser}/>
         </Segment>
       </Fragment>
