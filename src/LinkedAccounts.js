@@ -25,7 +25,7 @@ class LinkedAccountsRedux extends Component {
     const UID = this.props.currentUser.uid;
     let linkedDatabasesRef = firestore.collection(FIREBASE_PATH.LINKED_ACCOUNTS_BASE).doc(UID).collection(FIREBASE_PATH.FIRESTORE_ACCOUNT);
 
-    console.log('Getting linked databases from', linkedDatabasesRef);
+    console.log('Getting linked databases from', linkedDatabasesRef.path);
 
     linkedDatabasesRef.get().then((querySnapshot) => {
 
@@ -34,8 +34,6 @@ class LinkedAccountsRedux extends Component {
       querySnapshot.forEach((doc) => {
 
         let docData = doc.data();
-
-        console.log('docData', docData);
 
         let linkedAccount = {
           id: doc.id,
