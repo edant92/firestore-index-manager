@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import {Divider, Image, List, Loader, Segment} from "semantic-ui-react";
+import {Divider, Image, List, Loader} from "semantic-ui-react";
 import {firestore} from "./config/fire";
 import {FIREBASE_PATH} from "./Constants";
 import {connect} from "react-redux";
