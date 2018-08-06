@@ -24,3 +24,8 @@
   min-width: 550px;
   #padding: 0;
 }
+
+/*This is needed for Login Page as this is rendered outsite main content and otherwise margin-left^ ruins segment alignment*/
+#content-main-opposite {
+    margin-left: -250px !important;
+}

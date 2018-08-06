@@ -40,7 +40,7 @@ class Login extends Component {
     }
 
     return (
-      <Grid padded stackable columns='equal' centered verticalAlign='middle' textAlign='left'>
+      <Grid padded stackable columns='equal' centered verticalAlign='middle' textAlign='left' id='content-main-opposite'>
         <Grid.Column>
         </Grid.Column>
         <Grid.Column width={8}>
