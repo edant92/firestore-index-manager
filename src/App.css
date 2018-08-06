@@ -12,7 +12,10 @@
 #sidebar-menu-bottom {
   position: fixed;
   bottom: 0;
-  padding: 1em;
+}
+
+#sidebar-menu-bottom-image {
+  padding: 1em !important;
 }
 
 #content-main {

@@ -2,6 +2,7 @@
 
 export const ROUTER_PATH = {
   LOGIN: '/login',
+  LOGOUT: '/logout',
   REGISTER: '/register',
   INDEXES: '/indexes/:id',
   DASHBOARD_TO_INDEX: 'indexes',

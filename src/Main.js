@@ -4,6 +4,7 @@ import {ROUTER_PATH} from "./Constants";
 import Indexes from "./Indexes";
 import Login from "./authentication/Login";
 import Dashboard from "./Dashboard";
+import Logout from "./authentication/Logout";
 
 // AuthenticatedRoute added above App component
 const AuthenticatedRoute = ({component: Component, authenticated, ...rest}) => {
@@ -24,6 +25,9 @@ class Main extends Component {
       <Switch>
         <Route exact path={ROUTER_PATH.LOGIN} render={(props) => {
           return <Login setCurrentUser={this.props.setCurrentUser} currentUser={this.props.currentUser} {...props}/>
+        }}/>
+        <Route exact path={ROUTER_PATH.LOGOUT} render={(props) => {
+          return <Logout setCurrentUser={this.props.setCurrentUser} currentUser={this.props.currentUser} {...props}/>
         }}/>
         <AuthenticatedRoute authenticated={this.props.authenticated} exact path={ROUTER_PATH.INDEXES}
                             component={Indexes} currentUser={this.props.currentUser}/>

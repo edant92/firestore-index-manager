@@ -37,9 +37,9 @@ class NavBar extends Component {
 
         <Link
           to={ROUTER_PATH.DATABASES}><Menu.Item className='nav-bar-desktop-item' key={ROUTER_PATH.DATABASES}
-                                              id={ROUTER_PATH.DATABASES} as="span"
-                                              active={activeItem === ROUTER_PATH.DATABASES}
-                                              onClick={this.handleItemClick} link>Databases</Menu.Item></Link>
+                                                id={ROUTER_PATH.DATABASES} as="span"
+                                                active={activeItem === ROUTER_PATH.DATABASES}
+                                                onClick={this.handleItemClick} link>Databases</Menu.Item></Link>
 
         <Link
           to={ROUTER_PATH.SETTINGS}><Menu.Item className='nav-bar-desktop-item' key={ROUTER_PATH.SETTINGS}
@@ -47,9 +47,16 @@ class NavBar extends Component {
                                                active={activeItem === ROUTER_PATH.SETTINGS}
                                                onClick={this.handleItemClick} link>Settings</Menu.Item></Link>
 
-        <Menu.Item id="sidebar-menu-bottom">
+        <Menu.Menu id='sidebar-menu-bottom'>
+          <Link
+            to={ROUTER_PATH.LOGOUT}><Menu.Item className='nav-bar-desktop-item' key={ROUTER_PATH.LOGOUT}
+                                               id={ROUTER_PATH.LOGOUT} as="span"
+                                               active={activeItem === ROUTER_PATH.LOGOUT}
+                                               onClick={this.handleItemClick} link>Logout</Menu.Item></Link>
+          <Menu.Item id='sidebar-menu-bottom-image'>
             <Image src={builtWithFirebaseLogo} size='small' centered/>
-        </Menu.Item>
+          </Menu.Item>
+        </Menu.Menu>
       </Menu>
     );
   }
