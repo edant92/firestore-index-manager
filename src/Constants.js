@@ -7,7 +7,8 @@ export const ROUTER_PATH = {
   INDEXES: '/indexes/:id',
   DASHBOARD_TO_INDEX: 'indexes',
   SETTINGS: '/settings',
-  DATABASES: '/'
+  DATABASES: '/',
+  ACCOUNT_DELETED: '/account_deleted'
 };
 
 export const AUTHENTICATION = {
