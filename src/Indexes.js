@@ -49,7 +49,8 @@ class IndexesRedux extends Component {
   };
 
   deleteIndex = (name) => {
-    let {projectId, accessToken} = this.props.activeFirestoreDetails;
+    let projectId = this.props.activeFirestoreDetails.projectId;
+    let accessToken = this.props.accessToken;
     console.log('Deleting Index with ID of', name.replace('projects/' + projectId + '/databases/(default)/indexes/', ''));
     return fetch('https://firestore.googleapis.com/v1beta1/' + name, {
       method: 'delete',
@@ -57,6 +58,9 @@ class IndexesRedux extends Component {
         'Authorization': 'Bearer ' + accessToken
       }
     }).then((response) => {
+
+      //TODO: Add code to catch 401 (unauthorised) error
+
       console.log(response);
       console.log('Index successfully deleted');
     }).catch((error) => {
