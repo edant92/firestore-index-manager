@@ -16,14 +16,7 @@ class Login extends Component {
   constructor() {
     super();
     this.state = {
-      redirect: false,
-      email: '',
-      password: '',
-      formError: false,
-      emailError: false,
-      passwordError: false,
-      passwordErrorCode: '',
-      passwordErrorMessage: ''
+      redirect: false
     }
   }
 
