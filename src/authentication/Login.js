@@ -8,7 +8,7 @@ class Login extends Component {
 
   authWithGoogle = () => {
     firebaseAuth.useDeviceLanguage();
-    firebaseAuth.signInWithRedirect(googleProvider).catch((error) => {
+    firebaseAuth.signInWithPopup(googleProvider).catch((error) => {
       console.log(error.message, error.code);
     });
   };
