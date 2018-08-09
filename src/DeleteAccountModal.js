@@ -101,11 +101,12 @@ class DeleteAccountModal extends Component {
         <Modal.Header>Delete Account</Modal.Header>
         <Modal.Content>
           <p><strong>
-            Are you sure you want to delete your Firestore Index Manager account?
+            Are you sure you want to delete your Firestore Index Manager account? (You will need to re-authenticate your
+            account to do this)
           </strong></p>
           <p>
             This will delete your Firestore Index Manager account as well as the information for any associated
-            Firestore Databases. This action cannot be undone.
+            Firestore Databases. This action <i>cannot</i> be undone.
           </p>
         </Modal.Content>
         <Modal.Actions>
