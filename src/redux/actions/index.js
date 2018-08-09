@@ -1,5 +1,5 @@
 import {
-  SET_ACCESS_TOKEN, SET_ACTIVE_FIRESTORE_DETAILS,
+  SET_UPDATE_LINKED_ACCOUNTS, SET_ACCESS_TOKEN, SET_ACTIVE_FIRESTORE_DETAILS
 } from "../constants/action-types"
 
 export const setAccessToken = accessToken => ({
@@ -10,4 +10,9 @@ export const setAccessToken = accessToken => ({
 export const setActiveFirestoreDetails = activeFirestoreDetails => ({
   type: SET_ACTIVE_FIRESTORE_DETAILS,
   payload: activeFirestoreDetails
+});
+
+export const setUpdateLinkedAccounts = updateLinkedAccounts => ({
+  type: SET_UPDATE_LINKED_ACCOUNTS,
+  payload: updateLinkedAccounts
 });

@@ -3,8 +3,16 @@ import React, {Component} from "react";
 import {GoogleLogin} from "react-google-login";
 import {AUTHENTICATION, FIREBASE_PATH} from "./Constants";
 import {firestore} from './config/fire';
+import {setUpdateLinkedAccounts} from "./redux/actions";
+import {connect} from "react-redux";
 
-class AddLinkFirestore extends Component {
+const mapDispatchToProps = dispatch => {
+  return {
+    setUpdateLinkedAccounts: updateLinkedAccounts => dispatch(setUpdateLinkedAccounts(updateLinkedAccounts))
+  };
+};
+
+class AddLinkedAccountRedux extends Component {
 
   responseGoogleSuccess = (response) => {
     let accessToken = response.accessToken;
@@ -37,7 +45,10 @@ class AddLinkFirestore extends Component {
 
     firestore.collection(FIREBASE_PATH.LINKED_ACCOUNTS_BASE).doc(UID).collection(FIREBASE_PATH.FIRESTORE_ACCOUNT).add(
       firestoreInfo
-    )
+    );
+
+    this.props.setUpdateLinkedAccounts(firestoreInfo);
+
   };
 
   render() {
@@ -57,4 +68,6 @@ class AddLinkFirestore extends Component {
 
 }
 
-export default AddLinkFirestore
+const AddLinkFirestore = connect(null, mapDispatchToProps)(AddLinkedAccountRedux);
+
+export default AddLinkFirestore;

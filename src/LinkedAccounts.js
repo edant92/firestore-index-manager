@@ -3,19 +3,20 @@ import {Divider, Image, List, Loader} from "semantic-ui-react";
 import {firestore} from "./config/fire";
 import {FIREBASE_PATH} from "./Constants";
 import {connect} from "react-redux";
-import {setActiveFirestoreDetails} from "./redux/actions";
+import {setUpdateLinkedAccounts} from "./redux/actions";
 import LinkedDatabases from "./LinkedDatabases";
 import ReauthenticateLinkedAccount from "./ReauthenticateLinkedAccount";
 
 const mapStateToProps = state => {
   return {
     activeFirestoreDetails: state.activeFirestoreDetails,
+    updateLinkedAccounts: state.updateLinkedAccounts
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    setActiveFirestoreDetails: activeFirestoreDetails => dispatch(setActiveFirestoreDetails(activeFirestoreDetails))
+    setUpdateLinkedAccounts: updateLinkedAccounts => dispatch(setUpdateLinkedAccounts(updateLinkedAccounts))
   };
 };
 
@@ -55,6 +56,15 @@ class LinkedAccountsRedux extends Component {
     });
 
   };
+
+  componentWillReceiveProps(nextProps, nextContext) {
+
+    console.log('nextProps', nextProps);
+    if (nextProps.updateLinkedAccounts !== this.props.updateLinkedAccounts) {
+      this.getLinkedAccounts();
+      this.props.setUpdateLinkedAccounts(false);
+    }
+  }
 
   constructor() {
     super();
