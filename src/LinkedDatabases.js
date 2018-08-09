@@ -4,20 +4,21 @@ import {firestore} from "./config/fire";
 import {FIREBASE_PATH, ROUTER_PATH} from "./Constants";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
-import {setAccessToken, setActiveFirestoreDetails} from "./redux/actions";
+import {setAccessToken, setUpdateLinkedDatabases} from "./redux/actions";
 import AddLinkedFirestoreDatabase from "./AddLinkedFirestoreDatabase";
 
 const mapStateToProps = state => {
   return {
     activeFirestoreDetails: state.activeFirestoreDetails,
-    accessToken: state.accessToken
+    accessToken: state.accessToken,
+    updateLinkedDatabases: state.updateLinkedDatabases
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    setActiveFirestoreDetails: activeFirestoreDetails => dispatch(setActiveFirestoreDetails(activeFirestoreDetails)),
-    setAccessToken: accessToken => dispatch(setAccessToken(accessToken))
+    setAccessToken: accessToken => dispatch(setAccessToken(accessToken)),
+    setUpdateLinkedDatabases: updateLinkedDatabases => dispatch(setUpdateLinkedDatabases(updateLinkedDatabases))
   };
 };
 
@@ -67,6 +68,15 @@ class DatabasesRedux extends Component {
 
   componentDidMount() {
     this.getLinkedProjectDatabases();
+  }
+
+  componentWillReceiveProps(nextProps, nextContext) {
+
+    console.log('nextProps', nextProps);
+    if (nextProps.updateLinkedDatabases !== this.props.updateLinkedDatabases) {
+      this.getLinkedProjectDatabases();
+      this.props.setUpdateLinkedDatabases(false);
+    }
   }
 
   render() {

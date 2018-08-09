@@ -2,8 +2,16 @@ import {Button, Form, Header, Icon, Message, Modal} from "semantic-ui-react";
 import React, {Component} from "react";
 import {FIREBASE_PATH} from "./Constants";
 import {firestore} from './config/fire';
+import {setUpdateLinkedDatabases} from "./redux/actions";
+import connect from "react-redux/es/connect/connect";
 
-class AddLinkedFirestoreDatabase extends Component {
+const mapDispatchToProps = dispatch => {
+  return {
+    setUpdateLinkedDatabases: updateLinkedDatabases => dispatch(setUpdateLinkedDatabases(updateLinkedDatabases))
+  };
+};
+
+class AddLinkedFirestoreDatabaseRedux extends Component {
 
   state = {
     modalOpen: false,
@@ -95,6 +103,7 @@ class AddLinkedFirestoreDatabase extends Component {
     firestore.collection(FIREBASE_PATH.LINKED_ACCOUNTS_BASE).doc(UID).collection(FIREBASE_PATH.FIRESTORE_PROJECT).add(
       firestoreInfo
     ).then(() => {
+      this.props.setUpdateLinkedDatabases(true);
       this.handleClose();
     })
   };
@@ -156,4 +165,6 @@ class AddLinkedFirestoreDatabase extends Component {
 
 }
 
-export default AddLinkedFirestoreDatabase
+const AddLinkedFirestoreDatabase = connect(null, mapDispatchToProps)(AddLinkedFirestoreDatabaseRedux);
+
+export default AddLinkedFirestoreDatabase;
