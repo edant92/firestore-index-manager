@@ -45,9 +45,9 @@ class AddLinkedAccountRedux extends Component {
 
     firestore.collection(FIREBASE_PATH.LINKED_ACCOUNTS_BASE).doc(UID).collection(FIREBASE_PATH.FIRESTORE_ACCOUNT).add(
       firestoreInfo
-    );
-
-    this.props.setUpdateLinkedAccounts(firestoreInfo);
+    ).then(() => {
+      this.props.setUpdateLinkedAccounts(true);
+    });
 
   };
 
