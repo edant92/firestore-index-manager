@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import './App.css';
-import {Breadcrumb, Button, Icon, Label, Loader, Table} from "semantic-ui-react";
+import {Breadcrumb, Button, Icon, Label, Loader, Message, Table} from "semantic-ui-react";
 import {connect} from "react-redux";
 
 const mapStateToProps = state => {
@@ -22,20 +22,34 @@ class IndexesRedux extends Component {
       headers: {
         'Authorization': 'Bearer ' + accessToken
       }
-    }).then((response) => response.json()
+    }).then((response) => {
+
+        if (response.status === 401) {
+          throw new Error("Account Unauthorised. Please re-authenticate this account from the Databases screen.");
+        }
+        if (response.status === 403) {
+          throw new Error('Unable to find Firestore Database \'' + projectId + '\' for this account.');
+        }
+
+        return response.json()
+      }
     ).then((data) => {
 
       let indexes = data.indexes;
 
       if (indexes) {
-        this.setState({indexes, indexesLoading: false});
+        this.setState({indexes, indexesLoading: false, indexesError: false});
       } else {
-        this.setState({indexes: [], indexesLoading: false});
+        this.setState({indexes: [], indexesLoading: false, indexesError: false});
         console.log('No indexes available.')
       }
 
     }).catch((error) => {
-      this.setState({indexesLoading: false});
+
+      let errorText = `${error}`;
+      let indexesErrorMessage = errorText.replace('Error: ','');
+
+      this.setState({indexesLoading: false, indexesError: true, indexesErrorMessage});
       console.log(error);
     });
   };
@@ -86,6 +100,8 @@ class IndexesRedux extends Component {
     this.state = {
       indexes: [],
       indexesLoading: false,
+      indexesError: false,
+      indexesErrorMessage: '',
       disabledRowNames: []
     };
 
@@ -95,7 +111,7 @@ class IndexesRedux extends Component {
 
   render() {
 
-    let {indexes, indexesLoading, disabledRowNames} = this.state;
+    let {indexes, indexesLoading, indexesError, indexesErrorMessage, disabledRowNames} = this.state;
 
     return (
       <Fragment>
@@ -149,6 +165,11 @@ class IndexesRedux extends Component {
           </Table.Body>
         </Table>
         {indexesLoading && <Loader active inline='centered'>Loading Indexes...</Loader>}
+        {indexesError &&
+        <Message error>
+          <Message.Header>Error Loading Indexes</Message.Header>
+          <Message.Content>{indexesErrorMessage}</Message.Content>
+        </Message>}
       </Fragment>
     )
   }
