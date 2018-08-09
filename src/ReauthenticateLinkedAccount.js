@@ -3,8 +3,16 @@ import React, {Component} from "react";
 import {GoogleLogin} from "react-google-login";
 import {AUTHENTICATION, FIREBASE_PATH} from "./Constants";
 import {firestore} from './config/fire';
+import {setUpdateLinkedAccounts, setUpdateLinkedDatabases} from "./redux/actions";
+import connect from "react-redux/es/connect/connect";
 
-class ReauthenticateLinkedAccount extends Component {
+const mapDispatchToProps = dispatch => {
+  return {
+    setUpdateLinkedAccounts: updateLinkedAccounts => dispatch(setUpdateLinkedAccounts(updateLinkedAccounts)),
+  };
+};
+
+class ReauthenticateLinkedAccountRedux extends Component {
 
   state = {
     accountAuthenticated: true
@@ -44,6 +52,7 @@ class ReauthenticateLinkedAccount extends Component {
       firestoreInfo
     ).then(() => {
       this.setState({accountAuthenticated: true});
+      this.props.setUpdateLinkedAccounts(true);
     })
   };
 
@@ -76,7 +85,7 @@ class ReauthenticateLinkedAccount extends Component {
   render() {
 
     let {accountAuthenticated} = this.state;
-    
+
     if (accountAuthenticated) {
       return (
         <Button fluid positive disabled>
@@ -101,4 +110,6 @@ class ReauthenticateLinkedAccount extends Component {
 
 }
 
-export default ReauthenticateLinkedAccount
+const ReauthenticateLinkedAccount = connect(null, mapDispatchToProps)(ReauthenticateLinkedAccountRedux);
+
+export default ReauthenticateLinkedAccount;

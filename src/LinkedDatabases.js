@@ -83,6 +83,8 @@ class DatabasesRedux extends Component {
 
     let {linkedDatabases, showLoader} = this.state;
 
+    let accessToken = this.props.linkedAccount.accessToken;
+
     console.log('linkedDatabases', linkedDatabases);
 
     return (
@@ -112,7 +114,7 @@ class DatabasesRedux extends Component {
                   <Table.Cell>{linkedDatabase.projectId}</Table.Cell>
                   <Table.Cell>
                     <Link to={ROUTER_PATH.DASHBOARD_TO_INDEX + '/' + linkedDatabase.projectId}
-                          onClick={() => this.props.setAccessToken(this.props.linkedAccount.accessToken)}>
+                          onClick={() => this.props.setAccessToken(accessToken)}>
                       View Indexes
                     </Link>
                   </Table.Cell>
