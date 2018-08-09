@@ -3,7 +3,7 @@ import React, {Component} from "react";
 import {FIREBASE_PATH} from "./Constants";
 import {firestore} from './config/fire';
 import {setUpdateLinkedDatabases} from "./redux/actions";
-import connect from "react-redux/es/connect/connect";
+import {connect} from "react-redux";
 
 const mapDispatchToProps = dispatch => {
   return {
