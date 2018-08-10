@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Divider, Header, Segment} from "semantic-ui-react";
+import {Header, Image, List, Segment} from "semantic-ui-react";
 import DeleteAccountModal from "./DeleteAccountModal";
 
 class Settings extends Component {
@@ -9,12 +9,30 @@ class Settings extends Component {
   };
 
   render() {
+
+    let currentUser = this.props.currentUser;
+
+    console.log(currentUser);
+
     return (
       <Segment basic>
         <Header as='h1'>Settings</Header>
-        <Divider/>
-        <Header as='h2'>Delete Account</Header>
-        <DeleteAccountModal currentUser={this.props.currentUser}/>
+        <Segment>
+          <Header as='h2'>Account Details</Header>
+          <List divided verticalAlign='middle'>
+            <List.Item>
+              <Image avatar src={currentUser.photoURL}/>
+              <List.Content>
+                <List.Header>{currentUser.displayName}</List.Header>
+                {currentUser.email}
+              </List.Content>
+            </List.Item>
+          </List>
+        </Segment>
+        <Segment>
+          <Header as='h2'>Delete Account</Header>
+          <DeleteAccountModal currentUser={currentUser}/>
+        </Segment>
       </Segment>
     )
   }
