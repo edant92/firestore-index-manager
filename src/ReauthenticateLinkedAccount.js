@@ -3,7 +3,7 @@ import React, {Component} from "react";
 import {GoogleLogin} from "react-google-login";
 import {AUTHENTICATION, FIREBASE_PATH} from "./Constants";
 import {firestore} from './config/fire';
-import {setUpdateLinkedAccounts, setUpdateLinkedDatabases} from "./redux/actions";
+import {setUpdateLinkedAccounts} from "./redux/actions";
 import connect from "react-redux/es/connect/connect";
 
 const mapDispatchToProps = dispatch => {
