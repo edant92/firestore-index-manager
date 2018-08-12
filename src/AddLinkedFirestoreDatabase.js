@@ -74,6 +74,10 @@ class AddLinkedFirestoreDatabaseRedux extends Component {
       let errorText = `${error}`;
       let connectionTestErrorMessage = errorText.replace('Error: ','');
 
+      if (connectionTestErrorMessage === "TypeFailed to fetch") {
+        connectionTestErrorMessage = "Failed to get Linked Databases. Please refresh or try again later."
+      }
+
       this.setState({
         connectionTestLoaderActive: false,
         connectionTestSuccessful: false,
