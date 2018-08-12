@@ -6,6 +6,7 @@ import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {setAccessToken, setUpdateLinkedDatabases} from "./redux/actions";
 import AddLinkedFirestoreDatabase from "./AddLinkedFirestoreDatabase";
+import DeleteLinkedDatabaseModal from "./DeleteLinkedDatabaseModal";
 
 const mapStateToProps = state => {
   return {
@@ -119,8 +120,7 @@ class DatabasesRedux extends Component {
                     </Link>
                   </Table.Cell>
                   <Table.Cell>
-                    <Icon name='delete' link onClick={() => {
-                    }}/>
+                    <DeleteLinkedDatabaseModal linkedDatabase={linkedDatabase} currentUser={this.props.currentUser}/>
                   </Table.Cell>
                 </Table.Row>
               )}
