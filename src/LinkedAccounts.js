@@ -1,11 +1,12 @@
 import React, {Component, Fragment} from 'react';
-import {Divider, Image, List, Loader} from "semantic-ui-react";
+import {Divider, Dropdown, Icon, Image, List, Loader, Menu} from "semantic-ui-react";
 import {firestore} from "./config/fire";
 import {FIREBASE_PATH} from "./Constants";
 import {connect} from "react-redux";
 import {setUpdateLinkedAccounts} from "./redux/actions";
 import LinkedDatabases from "./LinkedDatabases";
 import ReauthenticateLinkedAccount from "./ReauthenticateLinkedAccount";
+import DeleteLinkedAccountModal from "./DeleteLinkedAccountModal";
 
 const mapStateToProps = state => {
   return {
@@ -95,20 +96,34 @@ class LinkedAccountsRedux extends Component {
           {linkedAccounts.length !== 0 ?
             linkedAccounts.map((linkedAccount, index) =>
               <Fragment key={index}>
-                <List divided verticalAlign='middle'>
-                  <List.Item>
-                    <List.Content floated='right'>
-                      <ReauthenticateLinkedAccount currentUser={this.props.currentUser} linkedAccount={linkedAccount}/>
-                    </List.Content>
-                    <Image avatar src={linkedAccount.googleUserPhoto}/>
-                    <List.Content>
-                      <List.Header>{linkedAccount.googleUserName}</List.Header>
-                      {linkedAccount.googleUserEmail}
-                    </List.Content>
-                  </List.Item>
-                </List>
+                <Menu style={{marginTop: 0}} fluid borderless text>
+                  <Menu.Item>
+                    <List divided verticalAlign='middle'>
+                      <List.Item>
+                        <Image avatar src={linkedAccount.googleUserPhoto}/>
+                        <List.Content>
+                          <List.Header>{linkedAccount.googleUserName}</List.Header>
+                          {linkedAccount.googleUserEmail}
+                        </List.Content>
+                      </List.Item>
+                    </List>
+                  </Menu.Item>
+                  <Menu.Menu position='right'>
+                    <Menu.Item>
+                      <ReauthenticateLinkedAccount currentUser={this.props.currentUser}
+                                                   linkedAccount={linkedAccount}/>
+                    </Menu.Item>
+                    <Dropdown item icon='setting'>
+                      <Dropdown.Menu>
+                        <Dropdown.Item><Icon name='refresh'/>Force Reauthentication</Dropdown.Item>
+                        <DeleteLinkedAccountModal currentUser={this.props.currentUser}
+                                                  linkedAccount={linkedAccount}/>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </Menu.Menu>
+                </Menu>
                 <LinkedDatabases currentUser={this.props.currentUser} linkedAccount={linkedAccount}/>
-                {index < linkedAccounts.length - 1 && <Divider section/>}
+                {index < linkedAccounts.length - 1 && <Divider/>}
               </Fragment>
             )
             :
